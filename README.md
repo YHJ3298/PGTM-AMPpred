@@ -19,7 +19,7 @@ This project focuses on the task of identifying antimicrobial peptides (AMPs) an
 
 ## Framework
 
-![PGTM-AMPpred_framework.png](E:\PGTM-AMPpred\assets\PGTM-AMPpred_framework.png.png)
+![PGTM-AMPpred_framework.png](.\PGTM-AMPpred\assets\PGTM-AMPpred_framework.png.png)
 
 The overall workflow contains five major steps:
 
