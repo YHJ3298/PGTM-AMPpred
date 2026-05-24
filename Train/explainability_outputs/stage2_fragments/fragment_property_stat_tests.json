@@ -1,0 +1,62 @@
+[
+  {
+    "metric": "net_charge",
+    "important_mean": 0.55,
+    "background_mean": 0.16666666666666666,
+    "important_median": 0.55,
+    "background_median": 0.0,
+    "mannwhitney_u": 1534.5,
+    "p_value": 0.15339076019958878,
+    "cliffs_delta": 0.1475,
+    "cohen_d": 0.2649084816568508,
+    "direction": "important > background"
+  },
+  {
+    "metric": "mean_hydrophobicity",
+    "important_mean": -0.37833333333333335,
+    "background_mean": 0.3992857142857143,
+    "important_median": -0.5142857142857143,
+    "background_median": 0.55,
+    "mannwhitney_u": 2389.5,
+    "p_value": 0.0019894511558826485,
+    "cliffs_delta": -0.3275,
+    "cohen_d": -0.5460636178790758,
+    "direction": "important < background"
+  },
+  {
+    "metric": "hydrophobic_fraction",
+    "important_mean": 0.44285714285714284,
+    "background_mean": 0.5142857142857143,
+    "important_median": 0.42857142857142855,
+    "background_median": 0.5714285714285714,
+    "mannwhitney_u": 2202.0,
+    "p_value": 0.030997265440616907,
+    "cliffs_delta": -0.22333333333333333,
+    "cohen_d": -0.34643364933707393,
+    "direction": "important < background"
+  },
+  {
+    "metric": "positive_fraction",
+    "important_mean": 0.19523809523809527,
+    "background_mean": 0.11428571428571428,
+    "important_median": 0.14285714285714285,
+    "background_median": 0.14285714285714285,
+    "mannwhitney_u": 1367.5,
+    "p_value": 0.015361119289599497,
+    "cliffs_delta": 0.24027777777777778,
+    "cohen_d": 0.5992028114629543,
+    "direction": "important > background"
+  },
+  {
+    "metric": "hydrophobic_moment",
+    "important_mean": 1.0610802030937203,
+    "background_mean": 1.059782362075597,
+    "important_median": 0.9805251156580793,
+    "background_median": 1.01075307255376,
+    "mannwhitney_u": 1847.5,
+    "p_value": 0.8051429355841033,
+    "cliffs_delta": -0.02638888888888889,
+    "cohen_d": 0.0027276345043662493,
+    "direction": "important > background"
+  }
+]

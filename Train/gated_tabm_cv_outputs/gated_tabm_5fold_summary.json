@@ -1,0 +1,37 @@
+{
+  "config": {
+    "k": 32,
+    "arch_type": "tabm",
+    "n_blocks": 2,
+    "d_block": 256,
+    "dropout": 0.1,
+    "use_num_embeddings": false,
+    "epochs": 200,
+    "batch_size": 256,
+    "lr": 0.001,
+    "weight_decay": 1e-05,
+    "patience": 20,
+    "val_ratio": 0.1,
+    "adapter_dim": 0,
+    "adapter_hidden_dim": 0,
+    "adapter_dropout": 0.1,
+    "adapter_activation": "gelu",
+    "early_stop_metric": "ROC_AUC"
+  },
+  "summary": {
+    "SN_mean": 0.956648371537867,
+    "SN_std": 0.008728094960255794,
+    "ACC_mean": 0.9570089783666835,
+    "ACC_std": 0.00430832805255579,
+    "SP_mean": 0.9573741435368625,
+    "SP_std": 0.013485269563950667,
+    "F1_mean": 0.9570098590213721,
+    "F1_std": 0.004049768104000856,
+    "MCC_mean": 0.9141792412652492,
+    "MCC_std": 0.008432553640357828,
+    "ROC_AUC_mean": 0.9913023468745662,
+    "ROC_AUC_std": 0.0028056850174424087,
+    "PR_AUC_mean": 0.9903322040566227,
+    "PR_AUC_std": 0.004592680110358266
+  }
+}
