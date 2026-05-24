@@ -1,33 +1,33 @@
 # PGTM-AMPpred
 
-**PGTM-AMPpred** is an interpretable antimicrobial peptide (AMP) identification framework based on **ProTrek_650M**, **Gated Adapter**, and **TabM**. It uses tri-modal pretrained protein representations to extract sequence-level embeddings, applies a lightweight gated adaptation module for task-specific feature reweighting, and performs AMP/non-AMP classification with a parameter-efficient TabM ensemble classifier.
+**PGTM-AMPpred** is an interpretable antimicrobial peptide (AMP) identification framework based on **ProTrek_650M**, **Gated Adapter**, and **TabM**. The framework first extracts sequence-level representations from a tri-modal pretrained protein language model, then performs task-specific feature reweighting with a lightweight Gated Adapter, and finally predicts AMP/non-AMP labels using a parameter-efficient TabM ensemble classifier.
 
-This project focuses on the task of identifying antimicrobial peptides (AMPs) and provides a complete code workflow ranging from **feature extraction using ProTrek_650M, training and testing with Gated-TabM, and interpretability analysis, through to the deployment of a local predictor**.
+This repository provides the complete workflow for **feature extraction, model training, independent testing, explainability analysis, and local AMP prediction**.
 
 ---
 
 ## Highlights
 
-- **Tri-modal pretrained representation**: uses ProTrek_650M sequence embeddings pretrained with sequence, structure, and function-text alignment.
-- **Lightweight task adaptation**: introduces a Gated Adapter to perform task-specific mapping and feature-wise reweighting before classification.
-- **Parameter-efficient ensemble classifier**: uses TabM to generate multiple prediction branches inside one model, improving robustness without heavy explicit ensembling.
-- **Interpretable analysis**: supports UMAP-based representation visualization and fragment-level perturbation analysis.
-- **No explicit structure preprocessing required**: prediction only requires peptide sequences and the local ProTrek_650M model.
-- **Complete local workflow**: includes training scripts, independent testing, explainability scripts, and a local AMP predictor.
+- **Tri-modal protein representation**: uses ProTrek_650M sequence embeddings pretrained through sequence, structure, and function-text alignment.
+- **Lightweight task adaptation**: introduces a Gated Adapter for task-specific feature transformation and feature-wise reweighting.
+- **Parameter-efficient ensemble learning**: adopts TabM to produce multiple prediction branches within a single model.
+- **Interpretable prediction pipeline**: supports UMAP-based representation visualization and fragment-level perturbation analysis.
+- **No explicit structure preprocessing required**: the downstream prediction workflow only requires peptide sequences and local ProTrek_650M weights.
+- **End-to-end local workflow**: includes training scripts, independent-test scripts, explainability modules, and a deployable local predictor.
 
 ---
 
 ## Framework
 
-![PGTM-AMPpred_framework.png](./PGTM-AMPpred_framework.png)
+![PGTM-AMPpred framework](./PGTM-AMPpred_framework.png)
 
-The overall workflow contains five major steps:
+PGTM-AMPpred contains five main steps:
 
 1. Standardize peptide sequences and replace non-standard amino acids with `X`.
 2. Extract sequence-level embeddings using the local ProTrek_650M model.
-3. Apply a Gated Adapter to map and reweight pretrained features for AMP recognition.
-4. Use TabM for AMP/non-AMP binary classification.
-5. Evaluate the model through cross-validation, independent testing, and explainability analysis.
+3. Refine pretrained features with a Gated Adapter for AMP-specific representation learning.
+4. Classify AMP/non-AMP samples using TabM.
+5. Evaluate the model using 5-fold cross-validation, independent testing, and explainability analysis.
 
 ---
 
@@ -35,45 +35,44 @@ The overall workflow contains five major steps:
 
 ```text
 PGTM-AMPpred/
-├── Predictor/                         # Local AMP predictor
-│   ├── .idea/
-│   ├── examples/                      # Example input files for prediction
-│   ├── models/                        # Trained Gated-TabM checkpoint for local prediction
-│   ├── outputs/                       # Local prediction outputs
-│   ├── ProTrek-main/                  # Local ProTrek source code used by the predictor
-│   ├── app.py                         # Predictor entry script
-│   ├── config.py                      # Predictor configuration
-│   ├── gated_tabm_model.py            # Gated-TabM model definition
-│   ├── predictor_engine.py            # Prediction pipeline
-│   └── protrek_feature_extractor.py   # ProTrek_650M feature extractor for prediction
+├── Predictor/                              # Local AMP predictor
+│   ├── examples/                           # Example input files for local prediction
+│   ├── models/
+│   │   ├── ProTrek_650M/                   # Download from Hugging Face and place here
+│   │   └── gated_tabm_model.pt             # Trained Gated-TabM checkpoint for prediction
+│   ├── outputs/                            # Local prediction outputs
+│   ├── ProTrek-main/                       # Local ProTrek source code for the predictor
+│   ├── app.py                              # Predictor entry script
+│   ├── config.py                           # Predictor configuration
+│   ├── gated_tabm_model.py                 # Gated-TabM model definition
+│   ├── predictor_engine.py                 # Prediction pipeline
+│   └── protrek_feature_extractor.py        # ProTrek_650M feature extractor for prediction
 │
-├── Train/                             # Training, testing, and explainability scripts
-│   ├── .idea/
-│   ├── datasets/                      # Dataset directory
-│   ├── explain_outputs/               # Independent-test checkpoint and outputs
-│   ├── explainability_outputs/        # Explainability results
-│   ├── gated_tabm_cv_outputs/         # 5-fold CV outputs
-│   ├── Models/                        # Local pretrained model directory
-│   │   └── ProTrek_650M/              # Downloaded ProTrek_650M model files
-│   ├── ProTrek-main/                  # Local ProTrek source code used by training scripts
-│   ├── 5-fold-CV.py                   # 5-fold cross-validation
+├── Train/                                  # Training, testing, and explainability scripts
+│   ├── datasets/                           # Dataset directory
+│   ├── explain_outputs/                    # Independent-test checkpoint and outputs
+│   ├── explainability_outputs/             # Explainability results
+│   ├── gated_tabm_cv_outputs/              # 5-fold CV outputs
+│   ├── Models/
+│   │   └── ProTrek_650M/                   # Download from Hugging Face and place here
+│   ├── ProTrek-main/                       # Local ProTrek source code for training scripts
+│   ├── 5-fold-CV.py                        # 5-fold cross-validation
+│   ├── independent-test.py                 # Independent test and checkpoint export
+│   ├── ProTrek650M-AMP-Embedding.py        # Batch ProTrek_650M embedding extraction
 │   ├── explainability_pipeline_utils.py
 │   ├── explainability_run_all.py
-│   ├── explainability_stage1_umap.py
-│   ├── explainability_stage2_fragments.py
-│   ├── independent-test.py            # Independent test and checkpoint export
-│   ├── negative_protrek650m_test.csv
+│   ├── explainability_stage1_umap.py       # UMAP-based explainability analysis
+│   ├── explainability_stage2_fragments.py  # Fragment-level perturbation analysis
+│   ├── positive_protrek650m_train.csv
 │   ├── negative_protrek650m_train.csv
 │   ├── positive_protrek650m_test.csv
-│   ├── positive_protrek650m_train.csv
-│   ├── ProTrek650M-AMP-Embedding.py   # Batch ProTrek_650M embedding extraction
-│   ├── test_protrek650m_gated_tabm.csv
-│   └── train_protrek650m_gated_tabm.csv
+│   └── negative_protrek650m_test.csv
 │
+├── PGTM-AMPpred_framework.png              # Framework figure used in README
 └── README.md
 ```
 
-> Note: `.idea/`, large pretrained weights, intermediate caches, generated outputs, and temporary result files are not recommended for Git tracking.
+> Large pretrained weights, generated checkpoints, intermediate feature tables, cache files, and temporary analysis outputs are not required for source-code tracking. They can be regenerated or distributed through external links/releases when necessary.
 
 ---
 
@@ -82,7 +81,7 @@ PGTM-AMPpred/
 Recommended environment:
 
 - Python >= 3.9
-- CUDA-enabled GPU is recommended for ProTrek_650M feature extraction
+- CUDA-enabled GPU recommended for ProTrek_650M feature extraction
 - PyTorch
 - NumPy
 - pandas
@@ -99,25 +98,43 @@ Install common dependencies:
 pip install numpy pandas scikit-learn matplotlib tqdm tabm torch torchmetrics transformers
 ```
 
-If you use GPU acceleration, install the PyTorch version matching your CUDA environment from the official PyTorch installation guide.
+If GPU acceleration is used, please install the PyTorch version matching your CUDA environment.
 
 ---
 
 ## External Model Preparation
 
-This project uses a local copy of **ProTrek_650M**. The pretrained model can be downloaded from Hugging Face:
+This project depends on a local copy of **ProTrek_650M**. The pretrained model can be downloaded from Hugging Face:
 
 ```text
 https://huggingface.co/westlake-repl/ProTrek_650M
 ```
 
-According to the current project structure, place the downloaded model files under:
+After downloading, please place the ProTrek_650M model files in **both** of the following directories according to the current repository structure:
 
 ```text
+PGTM-AMPpred/Predictor/models/ProTrek_650M/
 PGTM-AMPpred/Train/Models/ProTrek_650M/
 ```
 
-The expected model directory should contain `ProTrek_650M.pt` and the required encoder subdirectories:
+On Windows, the corresponding paths are:
+
+```text
+.\Predictor\models\ProTrek_650M
+.\Train\Models\ProTrek_650M
+```
+
+The expected directory layout is:
+
+```text
+ProTrek_650M/
+├── ProTrek_650M.pt
+├── esm2_t33_650M_UR50D/
+├── BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext/
+└── foldseek_t30_150M/
+```
+
+Therefore, the training-side model directory should look like:
 
 ```text
 PGTM-AMPpred/Train/Models/ProTrek_650M/
@@ -127,26 +144,27 @@ PGTM-AMPpred/Train/Models/ProTrek_650M/
 └── foldseek_t30_150M/
 ```
 
-When running scripts inside the `Train/` directory, the following path points to the correct local model directory:
+The predictor-side model directory should look like:
+
+```text
+PGTM-AMPpred/Predictor/models/ProTrek_650M/
+├── ProTrek_650M.pt
+├── esm2_t33_650M_UR50D/
+├── BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext/
+└── foldseek_t30_150M/
+```
+
+When running commands inside `Train/`, the relative path should be:
 
 ```python
 model_root = r"./Models/ProTrek_650M"
 ```
 
-For example:
+When running the local predictor inside `Predictor/`, the relative path should be configured as:
 
-```bash
-cd Train
-python ProTrek650M-AMP-Embedding.py
+```python
+model_root = r"./models/ProTrek_650M"
 ```
-
-In this case, `./Models/ProTrek_650M` is resolved as:
-
-```text
-PGTM-AMPpred/Train/Models/ProTrek_650M/
-```
-
-If you run scripts from another directory, use an absolute path or modify the relative path accordingly. The same rule applies to `--protrek_model_root` in the explainability commands.
 
 The ProTrek source code should be placed under:
 
@@ -175,7 +193,7 @@ Train/datasets/XUAMP/
     └── negative/XU_nonAMP.fasta
 ```
 
-The embedding extraction script will generate CSV files in `Train/`:
+The embedding extraction script generates the following CSV files in `Train/`:
 
 ```text
 positive_protrek650m_train.csv
@@ -218,7 +236,7 @@ tasks = [
 model_root = r"./Models/ProTrek_650M"
 ```
 
-Because the script is executed in `Train/`, `model_root = r"./Models/ProTrek_650M"` corresponds to:
+Because the script is executed inside `Train/`, `model_root = r"./Models/ProTrek_650M"` corresponds to:
 
 ```text
 PGTM-AMPpred/Train/Models/ProTrek_650M/
@@ -234,7 +252,7 @@ The script will:
 
 - parse FASTA files;
 - normalize amino acid sequences;
-- replace ambiguous/non-standard residues such as `B`, `J`, `O`, `U`, `Z` with `X`;
+- replace ambiguous or non-standard residues such as `B`, `J`, `O`, `U`, `Z` with `X`;
 - truncate long sequences according to `max_length`;
 - extract ProTrek_650M sequence embeddings;
 - save feature CSV files for downstream training and testing.
@@ -347,13 +365,19 @@ Predictor/
 
 Recommended preparation:
 
-1. Put the trained checkpoint into:
+1. Download ProTrek_650M from Hugging Face and place it under:
 
 ```text
-Predictor/models/gated_tabm_model.pt
+PGTM-AMPpred/Predictor/models/ProTrek_650M/
 ```
 
-2. Check and modify paths in:
+2. Put the trained Gated-TabM checkpoint into:
+
+```text
+PGTM-AMPpred/Predictor/models/gated_tabm_model.pt
+```
+
+3. Check and modify paths in:
 
 ```text
 Predictor/config.py
@@ -368,9 +392,7 @@ Gated-TabM checkpoint path
 Output directory
 ```
 
-3. Start the predictor:
-
-How to start the local predictor:
+Start the local predictor:
 
 ```bash
 cd Predictor
@@ -397,14 +419,14 @@ where `predicted_label = 1` denotes AMP and `predicted_label = 0` denotes non-AM
 
 ### 5-Fold Cross-Validation on XUAMP Training Set
 
-| Model | SN | SP | ACC | MCC | AUC | F1 |
-|---|---:|---:|---:|---:|---:|---:|
+| Model        |     SN |     SP |    ACC |    MCC |    AUC |     F1 |
+| ------------ | -----: | -----: | -----: | -----: | -----: | -----: |
 | PGTM-AMPpred | 0.9566 | 0.9574 | 0.9570 | 0.9142 | 0.9913 | 0.9570 |
 
 ### Independent Test on XUAMP Test Set
 
-| Model | SN | SP | ACC | MCC | AUC | F1 |
-|---|---:|---:|---:|---:|---:|---:|
+| Model        |     SN |     SP |    ACC |    MCC |    AUC |     F1 |
+| ------------ | -----: | -----: | -----: | -----: | -----: | -----: |
 | PGTM-AMPpred | 0.6133 | 0.9505 | 0.7819 | 0.5989 | 0.8662 | 0.7377 |
 
 Compared with representative AMP prediction methods, PGTM-AMPpred shows improved sensitivity and a better sensitivity-specificity trade-off on the XUAMP independent test set.
@@ -413,18 +435,18 @@ Compared with representative AMP prediction methods, PGTM-AMPpred shows improved
 
 ## Output Files
 
-| File / Directory | Description |
-|---|---|
-| `Train/positive_protrek650m_train.csv` | ProTrek_650M features for positive training samples |
-| `Train/negative_protrek650m_train.csv` | ProTrek_650M features for negative training samples |
-| `Train/train_protrek650m_gated_tabm.csv` | Merged labeled training feature table |
-| `Train/gated_tabm_cv_outputs/` | 5-fold CV metrics, OOF predictions, and curves |
-| `Train/explain_outputs/gated_tabm_model.pt` | Final trained Gated-TabM checkpoint |
-| `Train/explain_outputs/gated_tabm_independent_predictions.csv` | Independent test prediction results |
-| `Train/explain_outputs/gated_tabm_independent_metrics.json` | Independent test metrics |
-| `Train/explainability_outputs/stage1_umap/` | UMAP visualization results |
-| `Train/explainability_outputs/stage2_fragments/` | Fragment-level explainability results |
-| `Predictor/outputs/` | Local predictor outputs |
+| File / Directory                                             | Description                                                  |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `Train/positive_protrek650m_train.csv`                       | ProTrek_650M features for positive training samples          |
+| `Train/negative_protrek650m_train.csv`                       | ProTrek_650M features for negative training samples          |
+| `Train/train_protrek650m_gated_tabm.csv`                     | Merged labeled training feature table generated by 5-fold CV |
+| `Train/gated_tabm_cv_outputs/`                               | 5-fold CV metrics, out-of-fold predictions, and ROC/PR curves |
+| `Train/explain_outputs/gated_tabm_model.pt`                  | Final trained Gated-TabM checkpoint                          |
+| `Train/explain_outputs/gated_tabm_independent_predictions.csv` | Independent test prediction results                          |
+| `Train/explain_outputs/gated_tabm_independent_metrics.json`  | Independent test metrics                                     |
+| `Train/explainability_outputs/stage1_umap/`                  | UMAP visualization results                                   |
+| `Train/explainability_outputs/stage2_fragments/`             | Fragment-level explainability results                        |
+| `Predictor/outputs/`                                         | Local predictor outputs                                      |
 
 ---
 
@@ -432,26 +454,27 @@ Compared with representative AMP prediction methods, PGTM-AMPpred shows improved
 
 ### 1. ProTrek_650M directory not found
 
-The ProTrek_650M pretrained model can be downloaded from Hugging Face:
+Download ProTrek_650M from Hugging Face:
 
 ```text
 https://huggingface.co/westlake-repl/ProTrek_650M
 ```
 
-After downloading, place the model files under:
+Then place the downloaded files under the required path depending on the module you run:
 
 ```text
+Training scripts:
 PGTM-AMPpred/Train/Models/ProTrek_650M/
+
+Local predictor:
+PGTM-AMPpred/Predictor/models/ProTrek_650M/
 ```
 
-The model directory should contain `ProTrek_650M.pt` and the required encoder subdirectories:
+Windows-style paths:
 
 ```text
-Train/Models/ProTrek_650M/
-├── ProTrek_650M.pt
-├── esm2_t33_650M_UR50D/
-├── BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext/
-└── foldseek_t30_150M/
+.\Train\Models\ProTrek_650M
+.\Predictor\models\ProTrek_650M
 ```
 
 If you execute commands inside `Train/`, keep the path as:
@@ -460,7 +483,7 @@ If you execute commands inside `Train/`, keep the path as:
 model_root = r"./Models/ProTrek_650M"
 ```
 
-For command-line arguments, use:
+For command-line arguments in `Train/`, use:
 
 ```bash
 --protrek_model_root ./Models/ProTrek_650M
@@ -482,7 +505,7 @@ The key point is that all relative paths are resolved from the current working d
 
 ### 2. `faiss` is missing
 
-For feature extraction, `faiss` is generally not required. The embedding script includes a compatibility patch that activates a stub module when `faiss` is unavailable. If you need retrieval/indexing functions from ProTrek, install it manually:
+For feature extraction, `faiss` is generally not required. The embedding script includes a compatibility patch that activates a stub module when `faiss` is unavailable. If retrieval/indexing functions from ProTrek are required, install it manually:
 
 ```bash
 conda install -c conda-forge faiss-cpu
@@ -504,6 +527,18 @@ The column `protein_name` is treated as metadata and is removed before model tra
 
 ---
 
+## Reproducibility Notes
+
+For best reproducibility:
+
+- run all training and explainability commands from the `Train/` directory;
+- keep the ProTrek_650M directory structure unchanged after downloading;
+- use the fixed decision threshold `0.5` unless explicitly evaluating threshold sensitivity;
+- record CUDA, PyTorch, and Python versions when reporting new results;
+- keep generated feature files and checkpoints associated with the same model configuration.
+
+---
+
 ## Citation
 
 If you use this repository in your research, please cite the corresponding paper after publication.
@@ -511,7 +546,7 @@ If you use this repository in your research, please cite the corresponding paper
 ```bibtex
 @article{PGTM_AMPpred,
   title   = {PGTM-AMPpred: An Interpretable Antimicrobial Peptide Identification Framework Based on a Tri-modal Protein Language Model},
-  author  = {Hongjin Yan, Yun Zuo},
+  author  = {Hongjin Yan and Yun Zuo},
   journal = {To be updated},
   year    = {2026}
 }
