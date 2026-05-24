@@ -261,7 +261,6 @@ The script will:
 
 ## Step 2: 5-Fold Cross-Validation
 
-五折的指令：
 
 ```bash
 python 5-fold-CV.py --pos positive_protrek650m_train.csv --neg negative_protrek650m_train.csv
@@ -306,7 +305,6 @@ BEST_CONFIG = {
 
 ## Step 3: Independent Test
 
-独立测试的指令：
 
 ```bash
 python independent-test.py --train_merged train_protrek650m_gated_tabm.csv --pos_test positive_protrek650m_test.csv --neg_test negative_protrek650m_test.csv --checkpoint_out explain_outputs/gated_tabm_model.pt --pred_out explain_outputs/gated_tabm_independent_predictions.csv --metrics_json explain_outputs/gated_tabm_independent_metrics.json
@@ -329,7 +327,6 @@ The exported checkpoint can be used by the explainability scripts and the local 
 
 ### Stage 1: UMAP Visualization
 
-可解释性分析stage1：
 
 ```bash
 python explainability_stage1_umap.py --train_merged train_protrek650m_gated_tabm.csv --pos_test positive_protrek650m_test.csv --neg_test negative_protrek650m_test.csv --checkpoint explain_outputs/gated_tabm_model.pt --out_dir explainability_outputs/stage1_umap
@@ -339,7 +336,6 @@ This stage visualizes the representation space before and after Gated Adapter ma
 
 ### Stage 2: Fragment-Level Perturbation Analysis
 
-可解释性分析stage2:
 
 ```bash
 python explainability_stage2_fragments.py --train_merged train_protrek650m_gated_tabm.csv --pos_test positive_protrek650m_test.csv --neg_test negative_protrek650m_test.csv --pos_test_fasta ./datasets/XUAMP/XU_test/positive/XU_AMP.fasta --neg_test_fasta ./datasets/XUAMP/XU_test/negative/XU_nonAMP.fasta --protrek_model_root ./Models/ProTrek_650M --protrek_code_root ./ProTrek-main --checkpoint explain_outputs/gated_tabm_model.pt --out_dir explainability_outputs/stage2_fragments --window_size 7 --stride 1 --focus_label 1 --n_samples 20 --require_correct --top_n_per_seq 3
