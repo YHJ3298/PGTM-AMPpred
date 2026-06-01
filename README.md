@@ -1,5 +1,4 @@
-# PGTM-AMPpred: Tri-modal Protein Language Model and Gated Adaptation for Antimicrobial Peptide Prediction with Interpretability Analysis. 在投Journal of Chemical Information and Modeling
-
+# PGTM-AMPpred: Tri-modal Protein Language Model and Gated Adaptation for Antimicrobial Peptide Prediction with Interpretability Analysis.
 **PGTM-AMPpred** is an interpretable antimicrobial peptide (AMP) identification framework based on **ProTrek_650M**, **Gated Adapter**, and **TabM**. The framework first extracts sequence-level representations from a tri-modal pretrained protein language model, then performs task-specific feature reweighting with a lightweight Gated Adapter, and finally predicts AMP/non-AMP labels using a parameter-efficient TabM ensemble classifier.
 
 This repository provides the complete workflow for **feature extraction, model training, independent testing, explainability analysis, and local AMP prediction**.
