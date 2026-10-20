@@ -1,0 +1,3 @@
+﻿comparison,n_windows,spearman_rho,p_value
+X masking vs Alanine scan,911,0.3887337981454153,3.106672679666678e-34
+X masking vs Window shuffle,911,0.4105103650499856,2.3979172323804347e-38

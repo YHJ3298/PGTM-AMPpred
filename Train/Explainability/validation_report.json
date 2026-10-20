@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "scope": "Archived full-inference outputs; modules 1–4 numeric summaries and journal-image specifications",
+  "figures": [
+    {
+      "file": "01_representation_space_reorganization\\figures\\Figure_5_UMAP.tiff",
+      "pixels": [
+        4015,
+        2010
+      ],
+      "dpi": 600,
+      "mode": "RGB",
+      "width_cm": 16.997,
+      "height_cm": 8.509,
+      "sha256": "63d973ea84f6eca0a232e63da1c1f2afffe578573a67705c44086d83f72e5cc0"
+    },
+    {
+      "file": "01_representation_space_reorganization\\figures\\Figure_6_High_dimensional_separability.tiff",
+      "pixels": [
+        4015,
+        1500
+      ],
+      "dpi": 600,
+      "mode": "RGB",
+      "width_cm": 16.997,
+      "height_cm": 6.35,
+      "sha256": "b6a5171262fed030f3575b7dffd82c12899d8986cea5844d213b0bbac8d0cf2f"
+    },
+    {
+      "file": "02_attribution_fidelity\\figures\\Figure_7_AOPC_randomization.tiff",
+      "pixels": [
+        4015,
+        1830
+      ],
+      "dpi": 600,
+      "mode": "RGB",
+      "width_cm": 16.997,
+      "height_cm": 7.747,
+      "sha256": "8b46ca8ef658377c9734db17a99534889340bb5ea443b00f815de5b8d8da4708"
+    },
+    {
+      "file": "03_local_evidence_robustness\\figures\\Figure_8_Perturbation_robustness.tiff",
+      "pixels": [
+        4015,
+        1890
+      ],
+      "dpi": 600,
+      "mode": "RGB",
+      "width_cm": 16.997,
+      "height_cm": 8.001,
+      "sha256": "5f9c971b113c6a40f9541cd95de9de6955641b5d7dd9d2802ce1549ed9f8fd02"
+    },
+    {
+      "file": "04_residue_level_case_studies\\figures\\Figure_9_Residue_sensitivity.tiff",
+      "pixels": [
+        4015,
+        3690
+      ],
+      "dpi": 600,
+      "mode": "RGB",
+      "width_cm": 16.997,
+      "height_cm": 15.621,
+      "sha256": "49ead1a84cc850301d763824db1db4e9c94460c5faa27dd8c1d5e07b5c0844fe"
+    }
+  ],
+  "independent_test_n": 3072,
+  "cohort_n": 304,
+  "aopc_complete_n": 289,
+  "important_note": "5-NN was trained on training representations and evaluated on independent-test representations, not leave-one-out."
+}

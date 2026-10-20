@@ -1,0 +1,16 @@
+# Tested direct dependencies for the four-module analysis on Python 3.9.
+# Use a PyTorch build appropriate to the local CUDA/CPU installation.
+numpy==1.23.5
+pandas==2.3.3
+scipy==1.10.1
+scikit-learn==1.2.2
+matplotlib==3.9.4
+seaborn==0.13.2
+Pillow==11.3.0
+umap-learn==0.5.5
+pynndescent==0.5.12
+numba==0.58.1
+llvmlite==0.41.1
+tabm==0.0.3
+# PyTorch 2.5.1+cu121 was used here; install the compatible CUDA/CPU wheel separately.
+# ProTrek's external code/weights may require additional packages from its own requirements.txt.

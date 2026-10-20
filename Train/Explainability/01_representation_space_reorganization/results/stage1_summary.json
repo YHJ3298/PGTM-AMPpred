@@ -1,0 +1,40 @@
+{
+  "config": {
+    "k": 32,
+    "arch_type": "tabm",
+    "n_blocks": 2,
+    "d_block": 256,
+    "dropout": 0.1,
+    "use_num_embeddings": false,
+    "epochs": 200,
+    "batch_size": 256,
+    "lr": 0.001,
+    "weight_decay": 1e-05,
+    "patience": 20,
+    "val_ratio": 0.1,
+    "adapter_dim": 0,
+    "adapter_hidden_dim": 0,
+    "adapter_dropout": 0.1,
+    "adapter_activation": "gelu",
+    "early_stop_metric": "ROC_AUC"
+  },
+  "test_metrics": {
+    "SN": 0.61328125,
+    "ACC": 0.7819010416666666,
+    "SP": 0.9505208333333334,
+    "MCC": 0.5988854795309086,
+    "TP": 942,
+    "TN": 1460,
+    "FP": 76,
+    "FN": 594,
+    "ROC_AUC": 0.8662145402696397,
+    "PR_AUC": 0.8869303192387556
+  },
+  "n_test_samples": 3072,
+  "outputs": [
+    "stage1_test_predictions.csv",
+    "umap_raw_embedding.csv",
+    "umap_gated_embedding.csv",
+    "combined_umap_plots.png"
+  ]
+}
