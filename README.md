@@ -167,7 +167,7 @@ The checkpoint is used by the explainability package and can also be configured 
 
 ### 4. Run the four-module explainability analysis
 
-The package is located at `Train/explainability/`. Its expected inputs are existing files under `Train/`, including the merged training features, independent-test features, trained checkpoint, prediction records, XUAMP test FASTA files, ProTrek_650M weights, and ProTrek source code. The exact input tree and module details are documented in [`Train/explainability/README.md`](Train/explainability/README.md).
+The package is located at `Train/explainability/`. Its expected inputs are existing files under `Train/`, including the merged training features, independent-test features, trained checkpoint, prediction records, XUAMP test FASTA files, ProTrek_650M weights, and ProTrek source code. 
 
 From the repository root:
 
